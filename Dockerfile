@@ -26,6 +26,7 @@ RUN apt-get update \
     libssl-dev \
     libedit-dev \
     libedit2 \
+    libsodium-dev \
     default-mysql-client \
     vim \
     apt-utils \
@@ -60,6 +61,8 @@ RUN docker-php-ext-install \
     soap \
     xsl \
     zip \
+    sockets \
+    sodium \
     bz2
 
 # oAuth
