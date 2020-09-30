@@ -27,7 +27,6 @@ RUN apt-get update \
     libedit-dev \
     libedit2 \
     libsodium-dev \
-    default-mysql-client \
     vim \
     apt-utils \
     wget \
@@ -45,6 +44,16 @@ RUN apt-get update \
     bash-completion \
 	gnupg \
     && apt-get clean
+
+# MariaDB
+
+RUN wget https://downloads.mariadb.com/MariaDB/mariadb_repo_setup
+RUN echo "2de6253842f230bc554d3f5ab0c0dbf717caffbf45ae6893740707961c8407b7 mariadb_repo_setup" \
+    | sha256sum -c -
+RUN chmod +x mariadb_repo_setup
+RUN sudo ./mariadb_repo_setup \
+   --mariadb-server-version="mariadb-10.4"
+RUN apt-get update && apt-get install -y mariadb-server
 
 # Magento2 Dependencies
 
