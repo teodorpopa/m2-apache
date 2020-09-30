@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+if [ -s "/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini" ]; then
+  mv /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.iniOLD \
+  && /etc/init.d/apache2 force-reload \
+  && echo '=======================================' \
+  && echo '========= XDebug was disabled =========' \
+  && echo '======================================='
+else
+  mv /usr/local/etc/php/conf.d/docker-php-ext-xdebug.iniOLD /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+  && /etc/init.d/apache2 force-reload \
+  && echo '=======================================' \
+  && echo '========= XDebug was enabled ==========' \
+  && echo '======================================='
+fi
