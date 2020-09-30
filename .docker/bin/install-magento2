@@ -21,6 +21,12 @@ chmod u+w -R ./var ./vendor ./pub/static ./pub/media ./app/etc \
     --use-sample-data \
     --backend-frontname=admin \
     --use-sample-data \
+    --search-engine=elasticsearch7 \
+    --elasticsearch-host=https://127.0.0.1:9200 \
+    --elasticsearch-port=9200 \
+    --elasticsearch-enable-auth=1 \
+    --elasticsearch-username=elastic \
+    --elasticsearch-password=elastic \
 && mv ./app/etc/env.php ./app/etc/env.original.php;
 cp -rv /var/www/env.sample.php ./app/etc/env.php;
 
