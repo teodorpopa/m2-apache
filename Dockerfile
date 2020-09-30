@@ -10,11 +10,11 @@ ENV XDEBUG_PORT 9000
 # System Dependencies
 
 RUN apt-get update \
-	&& DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-	software-properties-common \
-	&& apt-get update \
-	&& DEBIAN_FRONTEND=noninteractive apt-get install -y \
-	cron \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    software-properties-common \
+    && apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    cron \
     git \
     libbz2-dev \
     libfreetype6-dev \
@@ -42,7 +42,7 @@ RUN apt-get update \
     redis-tools \
     telnet \
     bash-completion \
-	gnupg \
+    gnupg \
     && apt-get clean
 
 # MariaDB
@@ -58,10 +58,10 @@ RUN apt-get update && apt-get install -y mariadb-server
 # Magento2 Dependencies
 
 RUN docker-php-ext-configure \
-  	gd --with-freetype --with-jpeg
+    gd --with-freetype --with-jpeg
 
 RUN docker-php-ext-install \
-  	bcmath \
+    bcmath \
     gd \
     intl \
     bcmath \
@@ -77,18 +77,18 @@ RUN docker-php-ext-install \
 # oAuth
 
 RUN apt-get update \
-  	&& apt-get install -y \
-  	libpcre3 \
-  	libpcre3-dev \
-  	&& pecl install oauth \
-  	&& echo "extension=oauth.so" > /usr/local/etc/php/conf.d/docker-php-ext-oauth.ini
+    && apt-get install -y \
+    libpcre3 \
+    libpcre3-dev \
+    && pecl install oauth \
+    && echo "extension=oauth.so" > /usr/local/etc/php/conf.d/docker-php-ext-oauth.ini
 
 # Xdebug
 
 RUN pecl channel-update pecl.php.net \
-  && pecl install xdebug \
-  && docker-php-ext-enable xdebug \
-  && sed -i -e 's/^zend_extension/\;zend_extension/g' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+    && pecl install xdebug \
+    && docker-php-ext-enable xdebug \
+    && sed -i -e 's/^zend_extension/\;zend_extension/g' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 # Composer
 
@@ -98,7 +98,7 @@ RUN composer global require hirak/prestissimo
 # Node, nvm, npm & Grunt
 
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
-  	&& apt-get install -y nodejs build-essential \
+    && apt-get install -y nodejs build-essential \
     && curl https://raw.githubusercontent.com/creationix/nvm/v0.36.0/install.sh | sh \
     && npm i -g grunt-cli yarn
 
@@ -118,16 +118,16 @@ ENV PATH="/var/www/.composer/vendor/bin/:${PATH}"
 # Magerun2
 
 RUN wget https://files.magerun.net/n98-magerun2.phar \
-	&& chmod +x ./n98-magerun2.phar \
-	&& mv ./n98-magerun2.phar /usr/local/bin/
+    && chmod +x ./n98-magerun2.phar \
+    && mv ./n98-magerun2.phar /usr/local/bin/
 
 # Mhsendmail
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install golang-go \
-   && mkdir /opt/go \
-   && export GOPATH=/opt/go \
-   && go get github.com/mailhog/mhsendmail \
-   && cp /opt/go/bin/mhsendmail /usr/bin/mhsendmail
+    && mkdir /opt/go \
+    && export GOPATH=/opt/go \
+    && go get github.com/mailhog/mhsendmail \
+    && cp /opt/go/bin/mhsendmail /usr/bin/mhsendmail
 
 # Configure application
 
@@ -150,11 +150,11 @@ RUN echo "source /etc/bash_completion" >> /root/.bashrc
 RUN echo "source /etc/bash_completion" >> /var/www/.bashrc
 
 RUN chmod 777 -Rf /var/www /var/www/.* \
-	&& chown -Rf www-data:www-data /var/www /var/www/.* \
-	&& usermod -u 1000 www-data \
-	&& chsh -s /bin/bash www-data\
-	&& a2enmod rewrite \
-	&& a2enmod headers
+    && chown -Rf www-data:www-data /var/www /var/www/.* \
+    && usermod -u 1000 www-data \
+    && chsh -s /bin/bash www-data\
+    && a2enmod rewrite \
+    && a2enmod headers
 
 VOLUME /var/www/html
 WORKDIR /var/www/html
